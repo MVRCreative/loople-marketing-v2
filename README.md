@@ -169,6 +169,26 @@ A few common failure modes and how to recover:
 
 ---
 
+## Self-Playing Feature Demos
+
+Some feature media slots are filled by looped, hands-free animations that show one
+capability using itself instead of by a screenshot or an mp4. They live in
+`src/components/home/demos/` and are registered in `src/components/home/demos/index.ts`,
+keyed by the feature or sub-feature id from `src/data/feature-index.ts`. `FeatureMedia`
+checks that registry first, then `videoSrc`, then falls back to `MediaPlaceholder`.
+
+| Demo | Slot | What it shows |
+|---|---|---|
+| `RolesAccessDemo` | `roles-access` (Community Management sub-feature) | A faux cursor tours the Owner / Admin / Member tabs; each click rewrites the permission list, locking what that role can't reach |
+| `MemberDirectoryDemo` | `member-directory` (Community Management sub-feature) | A search query types itself, the directory filters live, and a faux cursor opens the matching member's profile with their family connections and program enrollments |
+| `ProgramSetupDemo` | `program-setup` (Online Registration sub-feature) | An organizer names a program, its schedule, price, and waiver stream in, a faux cursor publishes it, and the roster fills as registrations land |
+| `FamilyCheckoutDemo` | `family-checkout` (Online Registration sub-feature) | A faux cursor works the registration dialog end to end — picks the child, accepts the waiver, pays, and lands on the confirmation |
+
+`DemoCursor` is the shared faux pointer every demo uses.
+
+Demo copy lives in `src/data/feature-demos.ts` and mirrors the product's real roles and
+rules. The rulebook for building new ones is `.cursor/skills/self-playing-demos/SKILL.md`.
+
 ## File Reference
 
 | File | Purpose |

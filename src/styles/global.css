@@ -32,6 +32,17 @@
   --ds-color-secondary-foreground: oklch(0.22 0.04 230);
   --ds-color-accent: oklch(0.76 0.115 232);
   --ds-color-accent-foreground: oklch(0.16 0 0);
+  --ds-color-brand: #3367c7;
+  --ds-color-brand-muted: #e8f0ff;
+  --ds-color-surface: #f5f7fd;
+  --ds-color-coral-muted: #ffebee;
+  --ds-color-coral-foreground: #c62828;
+  --ds-color-amber-muted: #fffbeb;
+  --ds-color-amber-foreground: #b45309;
+  --ds-color-emerald-muted: #ecfdf5;
+  --ds-color-emerald-foreground: #047857;
+  --ds-color-violet-muted: #faf5ff;
+  --ds-color-violet-foreground: #7e22ce;
   --ds-color-success: oklch(0.72 0.18 152);
   --ds-color-warning: oklch(0.82 0.16 86);
   --ds-color-destructive: oklch(0.62 0.22 27);
@@ -87,6 +98,17 @@
   --ds-color-card-foreground: oklch(0.98 0 0);
   --ds-color-secondary: oklch(0.2 0 0);
   --ds-color-secondary-foreground: oklch(0.92 0 0);
+  --ds-color-brand: #6b93e0;
+  --ds-color-brand-muted: oklch(0.22 0.04 255);
+  --ds-color-surface: oklch(0.17 0.01 255);
+  --ds-color-coral-muted: oklch(0.22 0.04 25);
+  --ds-color-coral-foreground: oklch(0.78 0.1 25);
+  --ds-color-amber-muted: oklch(0.24 0.04 75);
+  --ds-color-amber-foreground: oklch(0.82 0.1 75);
+  --ds-color-emerald-muted: oklch(0.22 0.04 155);
+  --ds-color-emerald-foreground: oklch(0.8 0.1 155);
+  --ds-color-violet-muted: oklch(0.22 0.05 300);
+  --ds-color-violet-foreground: oklch(0.78 0.12 300);
   --ds-color-success: oklch(0.74 0.18 152);
   --ds-color-warning: oklch(0.84 0.16 86);
   --ds-color-destructive: oklch(0.66 0.22 27);
@@ -106,6 +128,17 @@
   --color-ds-secondary-foreground: var(--ds-color-secondary-foreground);
   --color-ds-accent: var(--ds-color-accent);
   --color-ds-accent-foreground: var(--ds-color-accent-foreground);
+  --color-ds-brand: var(--ds-color-brand);
+  --color-ds-brand-muted: var(--ds-color-brand-muted);
+  --color-ds-surface: var(--ds-color-surface);
+  --color-ds-coral-muted: var(--ds-color-coral-muted);
+  --color-ds-coral-foreground: var(--ds-color-coral-foreground);
+  --color-ds-amber-muted: var(--ds-color-amber-muted);
+  --color-ds-amber-foreground: var(--ds-color-amber-foreground);
+  --color-ds-emerald-muted: var(--ds-color-emerald-muted);
+  --color-ds-emerald-foreground: var(--ds-color-emerald-foreground);
+  --color-ds-violet-muted: var(--ds-color-violet-muted);
+  --color-ds-violet-foreground: var(--ds-color-violet-foreground);
   --color-ds-success: var(--ds-color-success);
   --color-ds-warning: var(--ds-color-warning);
   --color-ds-destructive: var(--ds-color-destructive);
@@ -240,9 +273,53 @@
   [data-theme='dark'] .ds-theme-toggle-moon {
     display: none;
   }
+
+  /*
+   * Homepage hero — layered brand-navy atmosphere over full-bleed media.
+   * Stronger bottom veil so type stays legible on busy collage photography.
+   */
+  .hero-gradient {
+    background:
+      linear-gradient(
+        180deg,
+        rgb(11 31 74 / 0.35) 0%,
+        rgb(11 31 74 / 0.12) 22%,
+        transparent 42%,
+        rgb(11 31 74 / 0.55) 62%,
+        rgb(11 31 74 / 0.92) 100%
+      ),
+      linear-gradient(
+        105deg,
+        rgb(11 31 74 / 0.62) 0%,
+        rgb(51 103 199 / 0.28) 36%,
+        transparent 58%
+      ),
+      radial-gradient(ellipse 90% 60% at 50% 100%, rgb(11 31 74 / 0.45), transparent 70%);
+  }
+
+  .hero-media-ken {
+    transform: scale(1.05);
+    transform-origin: center center;
+    animation: hero-media-ken 20s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  }
+
+  @keyframes hero-media-ken {
+    from {
+      transform: scale(1.06);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .hero-media-ken {
+    animation: none !important;
+    transform: none !important;
+  }
+
   *,
   *::before,
   *::after {
