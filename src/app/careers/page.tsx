@@ -12,9 +12,6 @@ export const metadata: Metadata = {
  */
 export default function CareersPage() {
   return (
-    <MarketingStubPage
-      title="Careers"
-      description="Come build the platform communities rely on."
-    />
+    <MarketingStubPage title="Careers" description="Come build the platform communities rely on." />
   );
 }

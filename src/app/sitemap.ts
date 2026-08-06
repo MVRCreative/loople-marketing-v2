@@ -1,5 +1,5 @@
 import type { MetadataRoute } from 'next';
-import { featureSlugs } from '@/data/feature-index';
+import { featureSlugs } from '@/data/features';
 import { getBaseUrl } from '@/utils/Helpers';
 
 export default function sitemap(): MetadataRoute.Sitemap {

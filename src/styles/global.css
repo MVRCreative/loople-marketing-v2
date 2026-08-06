@@ -288,12 +288,7 @@
         rgb(11 31 74 / 0.55) 62%,
         rgb(11 31 74 / 0.92) 100%
       ),
-      linear-gradient(
-        105deg,
-        rgb(11 31 74 / 0.62) 0%,
-        rgb(51 103 199 / 0.28) 36%,
-        transparent 58%
-      ),
+      linear-gradient(105deg, rgb(11 31 74 / 0.62) 0%, rgb(51 103 199 / 0.28) 36%, transparent 58%),
       radial-gradient(ellipse 90% 60% at 50% 100%, rgb(11 31 74 / 0.45), transparent 70%);
   }
 
@@ -310,6 +305,18 @@
 
     to {
       transform: scale(1);
+    }
+  }
+
+  @keyframes platform-menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 }

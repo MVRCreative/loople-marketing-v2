@@ -65,21 +65,19 @@ export const HomeHero = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
-    if (HERO_SLIDES.length < 2) {
-      return;
-    }
+    let id: number | undefined;
 
     const media = window.matchMedia('(prefers-reduced-motion: reduce)');
-    if (media.matches) {
-      return;
+    if (HERO_SLIDES.length >= 2 && !media.matches) {
+      id = window.setInterval(() => {
+        setActiveIndex((current) => (current + 1) % HERO_SLIDES.length);
+      }, SLIDE_INTERVAL_MS);
     }
 
-    const id = window.setInterval(() => {
-      setActiveIndex((current) => (current + 1) % HERO_SLIDES.length);
-    }, SLIDE_INTERVAL_MS);
-
     return () => {
-      window.clearInterval(id);
+      if (id !== undefined) {
+        window.clearInterval(id);
+      }
     };
   }, []);
 

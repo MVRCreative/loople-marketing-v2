@@ -12,9 +12,6 @@ export const metadata: Metadata = {
  */
 export default function PricingPage() {
   return (
-    <MarketingStubPage
-      title="Pricing"
-      description="Simple plans for communities of every size."
-    />
+    <MarketingStubPage title="Pricing" description="Simple plans for communities of every size." />
   );
 }

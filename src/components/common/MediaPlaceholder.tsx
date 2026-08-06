@@ -13,6 +13,11 @@ export type MediaPlaceholderProps = {
   className?: string;
 };
 
+/**
+ * Dashed media slot placeholder for missing production assets.
+ * @param props Aspect ratio, label, and optional className.
+ * @returns Placeholder frame.
+ */
 export const MediaPlaceholder = (props: MediaPlaceholderProps) => (
   <div
     aria-label={`${props.label} placeholder`}

@@ -2,32 +2,53 @@
  * Shared marketing site navigation and footer link data.
  */
 
+import type { PersonaGroupId } from '@/data/features';
+import {
+  getFeaturesByPersonaGroup,
+  getMenuPresentation,
+  listFeatures,
+  PERSONA_GROUPS,
+} from '@/data/features';
+
 export type SiteLink = {
   href: string;
   label: string;
 };
 
 /**
- * Primary nav item. `hasMenu` marks triggers reserved for a future
- * Platform mega menu or Communities flyout — not implemented yet.
+ * Primary nav item. `hasMenu` marks Platform as a mega-menu trigger.
  */
 export type SiteNavItem = SiteLink & {
   id: 'platform' | 'communities' | 'pricing' | 'resources';
   hasMenu?: boolean;
 };
 
+type PlatformMenuLink = SiteLink & {
+  description: string;
+};
+
+type PlatformMenuGroup = {
+  id: PersonaGroupId;
+  title: string;
+  links: readonly PlatformMenuLink[];
+};
+
+export type PlatformMenu = {
+  groups: readonly PlatformMenuGroup[];
+  viewAll: SiteLink;
+};
+
 export const siteNavLinks: readonly SiteNavItem[] = [
   {
     id: 'platform',
     label: 'Platform',
-    href: '/#feature-index-heading',
+    href: '/features',
     hasMenu: true,
   },
   {
     id: 'communities',
     label: 'Communities',
     href: '/communities',
-    hasMenu: true,
   },
   {
     id: 'pricing',
@@ -40,6 +61,25 @@ export const siteNavLinks: readonly SiteNavItem[] = [
     href: '/resources',
   },
 ] as const;
+
+/**
+ * Platform mega menu — persona groups derived from Feature entities.
+ */
+export const platformMenu: PlatformMenu = {
+  groups: PERSONA_GROUPS.map((group) => ({
+    id: group.id,
+    title: group.title,
+    links: getFeaturesByPersonaGroup(group.id).map((feature) => ({
+      href: `/features/${feature.id}`,
+      label: feature.name,
+      description: getMenuPresentation(feature.id)?.blurb ?? feature.description,
+    })),
+  })),
+  viewAll: {
+    href: '/features',
+    label: 'View all features',
+  },
+};
 
 /** Text link — account access. */
 export const siteSignInCta: SiteLink = {
@@ -64,11 +104,19 @@ export type FooterLinkGroup = {
   links: readonly SiteLink[];
 };
 
+const topFeatureLinks: readonly SiteLink[] = listFeatures()
+  .slice(0, 4)
+  .map((feature) => ({
+    href: `/features/${feature.id}`,
+    label: feature.name,
+  }));
+
 export const footerLinkGroups: readonly FooterLinkGroup[] = [
   {
     title: 'Product',
     links: [
-      { href: '/#feature-index-heading', label: 'Platform' },
+      { href: '/features', label: 'Platform' },
+      ...topFeatureLinks,
       { href: '/communities', label: 'Communities' },
       { href: '/pricing', label: 'Pricing' },
       { href: '/sign-up', label: 'Get started' },

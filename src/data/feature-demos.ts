@@ -8,11 +8,11 @@
  * role itself can only be changed by the owner.
  */
 
-export const DEMO_ORG = 'Northside Wrestling Club';
+const DEMO_ORG = 'Northside Wrestling Club';
 
 export type DemoRoleId = 'owner' | 'admin' | 'member';
 
-export type DemoPermission = {
+type DemoPermission = {
   label: string;
   /** False renders the locked treatment — what this role deliberately can't reach. */
   allowed: boolean;

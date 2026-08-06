@@ -12,9 +12,6 @@ export const metadata: Metadata = {
  */
 export default function TermsPage() {
   return (
-    <MarketingStubPage
-      title="Terms"
-      description="The terms that govern your use of Loople."
-    />
+    <MarketingStubPage title="Terms" description="The terms that govern your use of Loople." />
   );
 }

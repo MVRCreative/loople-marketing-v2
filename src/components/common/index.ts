@@ -7,7 +7,10 @@ export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from '.
 export { Card, type CardPadding, type CardProps, type CardTone } from './Card';
 export { LogoCarousel, type LogoCarouselItem, type LogoCarouselProps } from './LogoCarousel';
 export { MarketingStubPage, type MarketingStubPageProps } from './MarketingStubPage';
+export { MediaPlaceholder, type MediaPlaceholderProps } from './MediaPlaceholder';
+export { MobileNav, type MobileNavProps } from './MobileNav';
 export { Navbar, type NavbarProps, type NavLink } from './Navbar';
+export { PlatformMenuPanel, type PlatformMenuPanelProps } from './PlatformMenu';
 export { OfferCard, type OfferCardProps } from './OfferCard';
 export { ProductCard, type ProductCardProps } from './ProductCard';
 export { RevealHeading, type RevealHeadingProps } from './RevealHeading';

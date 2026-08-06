@@ -14,7 +14,6 @@ const config: KnipConfig = {
     // or intentionally deleted.
     'src/libs/DB.ts',
     'src/libs/Logger.ts',
-    'src/utils/AppConfig.ts',
     'src/utils/DBConnection.ts',
     'src/validations/**',
   ],

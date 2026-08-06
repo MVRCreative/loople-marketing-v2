@@ -5,8 +5,8 @@
 
 'use client';
 
+import { MediaPlaceholder } from '@/components/common/MediaPlaceholder';
 import { FEATURE_DEMOS } from '@/components/home/demos';
-import { MediaPlaceholder } from '@/components/home/MediaPlaceholder';
 import { cn } from '@/lib/cn';
 
 export type FeatureMediaProps = {

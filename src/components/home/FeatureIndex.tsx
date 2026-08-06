@@ -11,9 +11,11 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { RevealHeading, RevealLines, Stagger } from '@/components/common';
 import { FeatureMedia } from '@/components/home/FeatureMedia';
-import type { FeatureEyebrowTone, FeatureIndexItem, FeatureSubFeature } from '@/data/feature-index';
-import { FEATURE_INDEX_INTRO, FEATURE_INDEX_TAG, featureIndexItems } from '@/data/feature-index';
+import type { FeatureEyebrowTone, FeatureHomepagePanel, FeatureSubFeature } from '@/data/features';
+import { FEATURE_INDEX_INTRO, FEATURE_INDEX_TAG, getHomepageFeaturePanels } from '@/data/features';
 import { cn } from '@/lib/cn';
+
+const featureIndexItems = getHomepageFeaturePanels();
 
 const eyebrowToneClasses: Record<FeatureEyebrowTone, string> = {
   brand: 'bg-ds-brand-muted text-ds-brand',
@@ -49,7 +51,7 @@ const scrollToFeature = (id: string) => {
 };
 
 const FeatureNav = (props: {
-  items: readonly FeatureIndexItem[];
+  items: readonly FeatureHomepagePanel[];
   activeId: string;
   orientation: 'vertical' | 'horizontal';
 }) => (
@@ -140,7 +142,7 @@ const FeatureSubFeatureGrid = (props: { items: readonly FeatureSubFeature[] }) =
   </div>
 );
 
-const FeaturePanel = (props: { item: FeatureIndexItem }) => {
+const FeaturePanel = (props: { item: FeatureHomepagePanel }) => {
   const { subFeatures, cta } = props.item;
   const hasVideo = Boolean(props.item.videoSrc);
 

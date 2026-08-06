@@ -5,7 +5,7 @@
 
 import { spawn } from 'node:child_process';
 import process from 'node:process';
-import pg from 'pg';
+import { Client } from 'pg';
 
 const CONNECT_TIMEOUT_MS = 5000;
 
@@ -20,7 +20,7 @@ if (!url) {
   process.exit(0);
 }
 
-const client = new pg.Client({
+const client = new Client({
   connectionString: url,
   connectionTimeoutMillis: CONNECT_TIMEOUT_MS,
 });
