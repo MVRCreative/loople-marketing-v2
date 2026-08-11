@@ -48,6 +48,18 @@
   --ds-color-destructive: oklch(0.62 0.22 27);
   --ds-color-destructive-foreground: oklch(0.99 0 0);
 
+  /*
+   * Hero poster fills — bold, fixed-lightness accent shapes for the homepage
+   * hero's right-side illustration (`HeroCollage`). These don't invert with
+   * the theme (same rationale as `--ds-color-primary`): each shape carries
+   * its own built-in contrast via `--ds-color-hero-ink`, so it reads
+   * consistently on both light and dark page backgrounds.
+   */
+  --ds-color-hero-amber: oklch(0.8 0.13 55);
+  --ds-color-hero-emerald: oklch(0.79 0.12 155);
+  --ds-color-hero-coral: oklch(0.81 0.12 20);
+  --ds-color-hero-ink: oklch(0.16 0 0);
+
   /* Spacing */
   --ds-space-2xs: 0.25rem;
   --ds-space-xs: 0.5rem;
@@ -67,6 +79,7 @@
   --ds-radius-lg: 0.75rem;
   --ds-radius-xl: 1rem;
   --ds-radius-2xl: 1.5rem;
+  --ds-radius-3xl: 2rem;
   --ds-radius-full: 9999px;
 
   /* Shadows */
@@ -143,12 +156,17 @@
   --color-ds-warning: var(--ds-color-warning);
   --color-ds-destructive: var(--ds-color-destructive);
   --color-ds-destructive-foreground: var(--ds-color-destructive-foreground);
+  --color-ds-hero-amber: var(--ds-color-hero-amber);
+  --color-ds-hero-emerald: var(--ds-color-hero-emerald);
+  --color-ds-hero-coral: var(--ds-color-hero-coral);
+  --color-ds-hero-ink: var(--ds-color-hero-ink);
 
   --radius-ds-sm: var(--ds-radius-sm);
   --radius-ds-md: var(--ds-radius-md);
   --radius-ds-lg: var(--ds-radius-lg);
   --radius-ds-xl: var(--ds-radius-xl);
   --radius-ds-2xl: var(--ds-radius-2xl);
+  --radius-ds-3xl: var(--ds-radius-3xl);
   --radius-ds-full: var(--ds-radius-full);
 
   --shadow-ds-xs: var(--ds-shadow-xs);
@@ -272,24 +290,6 @@
 
   [data-theme='dark'] .ds-theme-toggle-moon {
     display: none;
-  }
-
-  /*
-   * Homepage hero — layered brand-navy atmosphere over full-bleed media.
-   * Stronger bottom veil so type stays legible on busy collage photography.
-   */
-  .hero-gradient {
-    background:
-      linear-gradient(
-        180deg,
-        rgb(11 31 74 / 0.35) 0%,
-        rgb(11 31 74 / 0.12) 22%,
-        transparent 42%,
-        rgb(11 31 74 / 0.55) 62%,
-        rgb(11 31 74 / 0.92) 100%
-      ),
-      linear-gradient(105deg, rgb(11 31 74 / 0.62) 0%, rgb(51 103 199 / 0.28) 36%, transparent 58%),
-      radial-gradient(ellipse 90% 60% at 50% 100%, rgb(11 31 74 / 0.45), transparent 70%);
   }
 
   .hero-media-ken {

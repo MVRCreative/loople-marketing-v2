@@ -10,13 +10,13 @@ export const metadata: Metadata = {
 };
 
 /**
- * Homepage — full-bleed photo hero, then the platform feature index.
+ * Homepage — split hero on the page canvas, then the platform feature index.
  * @returns Homepage layout with hero and feature index.
  */
 export default function HomePage() {
   return (
     <div className="bg-ds-background text-ds-foreground">
-      <Navbar overlayHero />
+      <Navbar />
 
       <HomeHero />
 
