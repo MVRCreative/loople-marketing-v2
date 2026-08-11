@@ -49,11 +49,10 @@
   --ds-color-destructive-foreground: oklch(0.99 0 0);
 
   /*
-   * Hero poster fills — bold, fixed-lightness accent shapes for the homepage
-   * hero's right-side illustration (`HeroCollage`). These don't invert with
-   * the theme (same rationale as `--ds-color-primary`): each shape carries
-   * its own built-in contrast via `--ds-color-hero-ink`, so it reads
-   * consistently on both light and dark page backgrounds.
+   * Hero accent fills — fixed-lightness colors used by leftover poster
+   * tokens. They don't invert with the theme (same rationale as
+   * `--ds-color-primary`): each fill carries its own contrast via
+   * `--ds-color-hero-ink`.
    */
   --ds-color-hero-amber: oklch(0.8 0.13 55);
   --ds-color-hero-emerald: oklch(0.79 0.12 155);
@@ -308,6 +307,32 @@
     }
   }
 
+  /* Slow pan/zoom that ping-pongs — used on the hero phone and orbit photos. */
+  .hero-media-ken-loop {
+    transform-origin: 56% 40%;
+    animation: hero-media-ken-loop 18s ease-in-out infinite alternate;
+  }
+
+  .hero-media-ken-loop-alt {
+    transform-origin: 30% 70%;
+    animation: hero-media-ken-loop 22s ease-in-out infinite alternate-reverse;
+  }
+
+  .hero-media-ken-loop-thumb {
+    transform-origin: 70% 30%;
+    animation: hero-media-ken-loop 16s ease-in-out infinite alternate;
+  }
+
+  @keyframes hero-media-ken-loop {
+    from {
+      transform: scale(1.06) translate3d(0, 0, 0);
+    }
+
+    to {
+      transform: scale(1.16) translate3d(-2.5%, -1.5%, 0);
+    }
+  }
+
   @keyframes platform-menu-in {
     from {
       opacity: 0;
@@ -322,7 +347,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-media-ken {
+  .hero-media-ken,
+  .hero-media-ken-loop,
+  .hero-media-ken-loop-alt,
+  .hero-media-ken-loop-thumb {
     animation: none !important;
     transform: none !important;
   }

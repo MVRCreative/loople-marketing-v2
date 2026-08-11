@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 };
 
 /**
- * Homepage — split hero on the page canvas, then the platform feature index.
+ * Homepage — centered hero on the page canvas, then the platform feature index.
  * @returns Homepage layout with hero and feature index.
  */
 export default function HomePage() {

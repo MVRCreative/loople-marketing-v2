@@ -253,7 +253,8 @@ export type RevealHeadingOptions = {
   start?: string;
 };
 
-const WORD_SPLIT_REGEX = /\s+/u;
+/** Breaking whitespace only — keep `\u00A0` so orphan-guards stay glued. */
+const WORD_SPLIT_REGEX = /[^\S\u00A0]+/u;
 
 const splitIntoWords = (target: HTMLElement): { restore: () => void; inners: HTMLElement[] } => {
   const originalText = target.textContent ?? '';
