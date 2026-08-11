@@ -16,6 +16,8 @@ const config: KnipConfig = {
     'src/libs/Logger.ts',
     'src/utils/DBConnection.ts',
     'src/validations/**',
+    // Nested Sanity Studio — its own package, not an entry of the marketing app.
+    'studio-loople/**',
   ],
   // Dependencies to ignore during analysis
   ignoreDependencies: [
