@@ -2,7 +2,7 @@
  * Feature index — scroll-spy presentation matching the Loople Figma content frame.
  *
  * Desktop: sticky left index + scrolling feature panels on the right.
- * Mobile/tablet: compact sticky horizontal index above stacked panels.
+ * Mobile/tablet: stacked feature panels only (no horizontal index).
  */
 
 'use client';
@@ -50,19 +50,8 @@ const scrollToFeature = (id: string) => {
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 };
 
-const FeatureNav = (props: {
-  items: readonly FeatureHomepagePanel[];
-  activeId: string;
-  orientation: 'vertical' | 'horizontal';
-}) => (
-  <nav
-    aria-label="Feature index"
-    className={cn(
-      props.orientation === 'vertical'
-        ? 'flex w-full flex-col gap-[15px]'
-        : 'flex gap-4 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden',
-    )}
-  >
+const FeatureNav = (props: { items: readonly FeatureHomepagePanel[]; activeId: string }) => (
+  <nav aria-label="Feature index" className="flex w-full flex-col gap-[15px]">
     {props.items.map((item) => {
       const active = item.id === props.activeId;
       return (
@@ -74,29 +63,17 @@ const FeatureNav = (props: {
             scrollToFeature(item.id);
           }}
           className={cn(
-            'relative text-left text-base font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ds-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-background',
-            props.orientation === 'vertical' && 'w-full',
-            props.orientation === 'horizontal' && 'shrink-0',
+            'relative w-full text-left text-base font-medium whitespace-nowrap transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ds-brand/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-background',
             active ? 'text-ds-foreground' : 'text-ds-border hover:text-ds-muted-foreground',
           )}
         >
-          {props.orientation === 'vertical' ? (
-            <span
-              aria-hidden="true"
-              className={cn(
-                'absolute top-0 left-[-45px] h-full w-0.5 -translate-x-1/2 bg-ds-brand transition-opacity duration-200',
-                active ? 'opacity-100' : 'opacity-0',
-              )}
-            />
-          ) : (
-            <span
-              aria-hidden="true"
-              className={cn(
-                'absolute right-0 -bottom-1 left-0 h-0.5 bg-ds-brand transition-opacity duration-200',
-                active ? 'opacity-100' : 'opacity-0',
-              )}
-            />
-          )}
+          <span
+            aria-hidden="true"
+            className={cn(
+              'absolute top-0 left-[-45px] h-full w-0.5 -translate-x-1/2 bg-ds-brand transition-opacity duration-200',
+              active ? 'opacity-100' : 'opacity-0',
+            )}
+          />
           {item.label}
         </button>
       );
@@ -263,15 +240,11 @@ export const FeatureIndex = () => {
           </div>
         </header>
 
-        <div className="sticky top-16 z-10 border-b border-ds-border bg-ds-background/95 px-6 py-4 backdrop-blur lg:hidden">
-          <FeatureNav items={featureIndexItems} activeId={activeId} orientation="horizontal" />
-        </div>
-
         {/* items-stretch: left rail border runs the full feature-stack height */}
         <div className="lg:flex lg:items-stretch">
           <aside className="relative hidden border-r border-ds-border lg:block lg:w-[319px] lg:shrink-0">
             <div className="sticky top-20 w-full px-[45px] py-[90px]">
-              <FeatureNav items={featureIndexItems} activeId={activeId} orientation="vertical" />
+              <FeatureNav items={featureIndexItems} activeId={activeId} />
             </div>
           </aside>
 

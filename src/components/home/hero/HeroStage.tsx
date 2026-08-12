@@ -61,9 +61,10 @@ const HeroOrbit = (props: HeroOrbitProps) => (
     style={{
       transform: props.out
         ? 'translate(0px, 0px) scale(1)'
-        : `translate(${props.x}, ${props.y}) scale(0.36)`,
-      opacity: props.out ? 1 : 0,
-      transitionProperty: props.live ? 'transform, opacity' : 'none',
+        : `translate(${props.x}, ${props.y}) scale(0.42)`,
+      // Stay visible while collapsed so the phone photo is covered during intro.
+      opacity: 1,
+      transitionProperty: props.live ? 'transform' : 'none',
       transitionDuration: props.out ? '800ms' : '520ms',
       transitionDelay: props.out && props.live ? props.delay : '0ms',
       transitionTimingFunction: props.out
@@ -248,21 +249,21 @@ export const HeroStage = (props: HeroStageProps) => {
     <div
       aria-hidden="true"
       className={cn(
-        'relative mx-auto h-[min(36rem,56svh)] w-full max-w-5xl sm:h-[min(40rem,62svh)] lg:h-[min(44rem,70svh)]',
+        'relative mx-auto h-[min(38rem,64svh)] w-full max-w-5xl sm:h-[min(40rem,62svh)] lg:h-[min(44rem,70svh)]',
         props.className,
       )}
     >
-      <div className="absolute top-[4%] left-1/2 z-10 w-[56%] -translate-x-1/2 sm:top-[3%] sm:w-[40%] lg:w-[30%]">
+      <div className="absolute top-[4%] left-1/2 z-10 w-[62%] -translate-x-1/2 sm:top-[3%] sm:w-[40%] lg:w-[30%]">
         <div className="relative aspect-[9/16]">
           <PhoneScreen />
 
           <HeroOrbit
             out={orbit.out}
             live={orbit.live}
-            x="30%"
-            y="40%"
+            x="18%"
+            y="28%"
             delay="60ms"
-            className="top-[6%] -left-[18%] z-20 sm:-left-[22%]"
+            className="top-[8%] -left-[12%] z-20 sm:top-[6%] sm:-left-[22%]"
           >
             <MembersChip />
           </HeroOrbit>
@@ -270,10 +271,10 @@ export const HeroStage = (props: HeroStageProps) => {
           <HeroOrbit
             out={orbit.out}
             live={orbit.live}
-            x="-24%"
-            y="20%"
+            x="-16%"
+            y="14%"
             delay="140ms"
-            className="top-[22%] -right-[8%] z-20 flex flex-col items-end gap-1.5 sm:-right-[14%]"
+            className="top-[20%] -right-[4%] z-20 flex flex-col items-end gap-1.5 sm:top-[22%] sm:-right-[14%]"
           >
             {HERO_PHONE_CHIPS.map((chip) => (
               <span
@@ -309,10 +310,10 @@ export const HeroStage = (props: HeroStageProps) => {
       <HeroOrbit
         out={orbit.out}
         live={orbit.live}
-        x="80%"
-        y="8%"
+        x="42%"
+        y="6%"
         delay="90ms"
-        className="top-[36%] left-0 z-20 w-[46%] sm:top-[40%] sm:w-[32%] lg:left-[1%] lg:w-[24%]"
+        className="top-[30%] left-[2%] z-20 w-[54%] sm:top-[40%] sm:left-0 sm:w-[32%] lg:left-[1%] lg:w-[24%]"
       >
         <GroupsCard />
       </HeroOrbit>
@@ -350,10 +351,10 @@ export const HeroStage = (props: HeroStageProps) => {
       <HeroOrbit
         out={orbit.out}
         live={orbit.live}
-        x="-80%"
-        y="12%"
+        x="-38%"
+        y="8%"
         delay="120ms"
-        className="top-[32%] right-0 z-20 w-[46%] sm:top-[36%] sm:w-[32%] lg:right-[1%] lg:w-[24%]"
+        className="top-[26%] right-[2%] z-20 w-[54%] sm:top-[36%] sm:right-0 sm:w-[32%] lg:right-[1%] lg:w-[24%]"
       >
         <UpdatesCard />
       </HeroOrbit>
@@ -361,10 +362,10 @@ export const HeroStage = (props: HeroStageProps) => {
       <HeroOrbit
         out={orbit.out}
         live={orbit.live}
-        x="-70%"
-        y="-50%"
+        x="-36%"
+        y="-28%"
         delay="200ms"
-        className="top-[62%] right-[1%] z-20 w-[42%] sm:top-[60%] sm:w-[26%] lg:right-[3%] lg:w-[18%]"
+        className="top-[58%] right-[6%] z-20 w-[48%] sm:top-[60%] sm:right-[1%] sm:w-[26%] lg:right-[3%] lg:w-[18%]"
       >
         <RegisterCard />
       </HeroOrbit>

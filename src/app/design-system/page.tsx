@@ -559,7 +559,7 @@ export default function DesignSystemPage() {
               id="ds-navigation"
               eyebrow="09 — Navigation"
               title="Primary chrome."
-              description="Sticky navbar with route links and theme toggle. Brand mark is temporary until Loople logo assets land."
+              description="Sticky navbar with route links and CTAs. Brand mark is temporary until Loople logo assets land."
             />
             <div className="overflow-hidden rounded-ds-lg border border-ds-border">
               <Navbar />

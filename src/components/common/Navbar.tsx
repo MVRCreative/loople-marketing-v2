@@ -1,6 +1,6 @@
 /**
  * Navbar — logo, Platform mega menu / Communities / Pricing / Resources,
- * Sign in text link, Get started CTA, theme toggle, and mobile disclosure.
+ * Sign in text link, Get started CTA, and mobile disclosure.
  *
  * On the homepage (`overlayHero`), the bar sits fixed over the hero:
  * transparent with the white mark while the hero is in view, then
@@ -17,7 +17,6 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/common/Button';
 import { MobileNav } from '@/components/common/MobileNav';
 import { PlatformMenuPanel } from '@/components/common/PlatformMenu';
-import { ThemeToggle } from '@/components/common/ThemeToggle';
 import { siteNavLinks, sitePrimaryCta, siteSignInCta } from '@/data/site-nav';
 import type { SiteNavItem } from '@/data/site-nav';
 import { cn } from '@/lib/cn';
@@ -242,13 +241,6 @@ export const Navbar = (props: NavbarProps) => {
               {sitePrimaryCta.label}
             </Button>
           </div>
-
-          <ThemeToggle
-            className={cn(
-              transparent &&
-                'text-white/85 hover:bg-white/10 hover:text-white focus-visible:ring-white/50 focus-visible:ring-offset-transparent',
-            )}
-          />
 
           <MobileNav transparent={transparent} links={links} />
         </div>

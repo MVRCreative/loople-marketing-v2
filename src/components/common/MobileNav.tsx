@@ -62,6 +62,22 @@ export const MobileNav = (props: MobileNavProps) => {
     };
   }, [open]);
 
+  useEffect(() => {
+    const { body, documentElement } = document;
+    const previousBodyOverflow = body.style.overflow;
+    const previousHtmlOverflow = documentElement.style.overflow;
+
+    if (open) {
+      body.style.overflow = 'hidden';
+      documentElement.style.overflow = 'hidden';
+    }
+
+    return () => {
+      body.style.overflow = previousBodyOverflow;
+      documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [open]);
+
   const close = () => {
     setOpen(false);
   };
@@ -77,32 +93,32 @@ export const MobileNav = (props: MobileNavProps) => {
           setOpen((value) => !value);
         }}
         className={cn(
-          'inline-flex size-9 items-center justify-center rounded-ds-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
+          'inline-flex size-10 shrink-0 items-center justify-center overflow-visible rounded-ds-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           transparent
             ? 'text-white hover:bg-white/10 focus-visible:ring-white/50 focus-visible:ring-offset-transparent'
             : 'text-ds-foreground hover:bg-ds-muted focus-visible:ring-ds-primary/40 focus-visible:ring-offset-ds-background',
         )}
       >
-        <span className="relative block size-4" aria-hidden="true">
+        <span className="relative block size-5 overflow-visible" aria-hidden="true">
           <span
             className={cn(
-              'absolute top-1 left-0 h-0.5 w-4 rounded-full transition-transform duration-200',
+              'absolute top-1/2 left-1/2 h-0.5 w-4 origin-center -translate-x-1/2 rounded-full transition-[transform,opacity] duration-200',
               transparent ? 'bg-white' : 'bg-current',
-              open && 'top-1.5 rotate-45',
+              open ? '-translate-y-1/2 rotate-45' : '-translate-y-[7px]',
             )}
           />
           <span
             className={cn(
-              'absolute top-[7px] left-0 h-0.5 w-4 rounded-full transition-opacity duration-200',
+              'absolute top-1/2 left-1/2 h-0.5 w-4 origin-center -translate-x-1/2 -translate-y-1/2 rounded-full transition-opacity duration-200',
               transparent ? 'bg-white' : 'bg-current',
               open && 'opacity-0',
             )}
           />
           <span
             className={cn(
-              'absolute top-3 left-0 h-0.5 w-4 rounded-full transition-transform duration-200',
+              'absolute top-1/2 left-1/2 h-0.5 w-4 origin-center -translate-x-1/2 rounded-full transition-[transform,opacity] duration-200',
               transparent ? 'bg-white' : 'bg-current',
-              open && 'top-1.5 -rotate-45',
+              open ? '-translate-y-1/2 -rotate-45' : 'translate-y-[5px]',
             )}
           />
         </span>
@@ -111,7 +127,7 @@ export const MobileNav = (props: MobileNavProps) => {
       {open ? (
         <div
           id={panelId}
-          className="absolute inset-x-0 top-full border-b border-ds-border/60 bg-ds-background shadow-ds-sm"
+          className="absolute inset-x-0 top-full max-h-[calc(100dvh-4rem)] overflow-y-auto border-b border-ds-border/60 bg-ds-background shadow-ds-sm"
         >
           <div className="mx-auto flex max-w-6xl flex-col gap-1 px-6 py-4">
             {links.map((item) => {

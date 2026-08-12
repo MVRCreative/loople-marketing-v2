@@ -1,6 +1,8 @@
+import { GoogleTagManager } from '@next/third-parties/google';
 import type { Metadata, Viewport } from 'next';
 import { SmoothScroll } from '@/components/common';
 import { THEME_INIT_SCRIPT } from '@/lib/theme';
+import { Env } from '@/libs/Env';
 import '@/styles/global.css';
 
 export const metadata: Metadata = {
@@ -44,6 +46,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
           dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }}
         />
       </head>
+      {Env.NEXT_PUBLIC_GTM_ID ? <GoogleTagManager gtmId={Env.NEXT_PUBLIC_GTM_ID} /> : null}
       <body className="bg-ds-background text-ds-foreground antialiased">
         <SmoothScroll>{props.children}</SmoothScroll>
       </body>

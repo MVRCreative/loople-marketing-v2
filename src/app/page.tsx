@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Navbar, SiteFooter } from '@/components/common';
 import { FeatureIndex } from '@/components/home/FeatureIndex';
+import { HomeCta } from '@/components/home/HomeCta';
 import { HomeHero } from '@/components/home/HomeHero';
 
 export const metadata: Metadata = {
@@ -10,8 +11,8 @@ export const metadata: Metadata = {
 };
 
 /**
- * Homepage — centered hero on the page canvas, then the platform feature index.
- * @returns Homepage layout with hero and feature index.
+ * Homepage — hero, feature index, closing CTA, and footer.
+ * @returns Homepage layout with hero, features, and CTA.
  */
 export default function HomePage() {
   return (
@@ -21,6 +22,8 @@ export default function HomePage() {
       <HomeHero />
 
       <FeatureIndex />
+
+      <HomeCta />
 
       <SiteFooter />
     </div>

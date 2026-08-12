@@ -1,15 +1,16 @@
 /**
- * Site footer — multi-column marketing links and brand mark.
+ * Site footer — multi-column marketing links, brand mark, and theme toggle.
  */
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { ThemeToggle } from '@/components/common/ThemeToggle';
 import { footerLinkGroups } from '@/data/site-nav';
 import { AppConfig } from '@/utils/AppConfig';
 
 /**
  * Global marketing footer.
- * @returns Footer with product, company, resources, and legal links.
+ * @returns Footer with product, company, resources, legal links, and theme toggle.
  */
 export const SiteFooter = () => {
   const year = new Date().getFullYear();
@@ -62,11 +63,14 @@ export const SiteFooter = () => {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-3 border-t border-ds-border/60 pt-8 text-xs text-ds-muted-foreground sm:flex-row sm:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-ds-border/60 pt-8 text-xs text-ds-muted-foreground sm:flex-row sm:items-center">
           <span>
             © {year} {AppConfig.name}
           </span>
-          <span className="tracking-[0.2em]">L-O-O-P-L-E</span>
+          <div className="flex w-full items-center justify-between gap-4 sm:w-auto sm:justify-end">
+            <ThemeToggle />
+            <span className="tracking-[0.2em]">L-O-O-P-L-E</span>
+          </div>
         </div>
       </div>
     </footer>
