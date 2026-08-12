@@ -23,7 +23,6 @@ const config: KnipConfig = {
   ignoreDependencies: [
     '@commitlint/types',
     '@swc/helpers', // Avoid error in CI: "`npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync."
-    'vite',
     // Intended building blocks listed on the home page; will be consumed
     // by upcoming landing pages and the Shopify integration.
     '@shopify/storefront-api-client',
