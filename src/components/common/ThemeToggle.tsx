@@ -78,6 +78,10 @@ const runInkDropReveal = async (options: RevealOptions): Promise<void> => {
     // reflects the new theme — nothing to animate.
     return;
   }
+
+  // Ease-in (not ease-out): circle area grows with r², so a decelerating
+  // radius looks like it races to ~80% then crawls. Chrome's VT guidance
+  // uses ease-in for the same reason.
   document.documentElement.animate(
     {
       clipPath: [
@@ -86,8 +90,9 @@ const runInkDropReveal = async (options: RevealOptions): Promise<void> => {
       ],
     },
     {
-      duration: 520,
-      easing: 'cubic-bezier(0.22, 1, 0.36, 1)',
+      duration: 500,
+      easing: 'ease-in',
+      fill: 'both',
       pseudoElement: '::view-transition-new(root)',
     },
   );
@@ -144,7 +149,7 @@ export const ThemeToggle = (props: ThemeToggleProps) => {
     setTheme(readActiveTheme());
   }, []);
 
-  const toggle = (event: ReactMouseEvent<HTMLButtonElement>) => {
+  const toggle = async (event: ReactMouseEvent<HTMLButtonElement>) => {
     const next: Theme = theme === 'dark' ? 'light' : 'dark';
     const doc = document as DocumentWithViewTransition;
 
@@ -169,14 +174,21 @@ export const ThemeToggle = (props: ThemeToggleProps) => {
 
     // The icon swap is driven by `[data-theme]` in CSS (see global.css),
     // so the attribute change inside the callback is enough for both
-    // snapshots to reflect their respective icons.
+    // snapshots to reflect their respective icons. Defer the React
+    // state update until the transition finishes so a re-render doesn't
+    // contend with the snapshot choreography mid-flight.
     const transition = doc.startViewTransition(() => {
       applyTheme(next);
     });
 
-    setTheme(next);
-
     void runInkDropReveal({ transition, originX, originY, endRadius });
+
+    try {
+      await transition.finished;
+    } catch {
+      // Transition was skipped; still sync React to the applied theme.
+    }
+    setTheme(next);
   };
 
   const label = theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme';

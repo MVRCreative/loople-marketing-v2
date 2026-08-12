@@ -6,13 +6,14 @@
  * in localStorage. The pre-paint script below reads that value before
  * React hydrates and sets `data-theme` on `<html>`, so users never see a
  * flash of the wrong theme on first load. When no preference is stored
- * we fall back to `prefers-color-scheme`.
+ * we default to light.
  */
 
 export type Theme = 'light' | 'dark';
 
 export const THEME_STORAGE_KEY = 'ds-theme';
 export const THEME_ATTRIBUTE = 'data-theme';
+export const DEFAULT_THEME: Theme = 'light';
 
 /**
  * Inline script body that runs synchronously in `<head>` to resolve the
@@ -25,9 +26,11 @@ export const THEME_ATTRIBUTE = 'data-theme';
 export const THEME_INIT_SCRIPT = `(function(){
   try {
     var stored = localStorage.getItem('${THEME_STORAGE_KEY}');
-    var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    var theme = stored === 'light' || stored === 'dark' ? stored : (prefersDark ? 'dark' : 'light');
+    var theme = stored === 'light' || stored === 'dark' ? stored : '${DEFAULT_THEME}';
     document.documentElement.setAttribute('${THEME_ATTRIBUTE}', theme);
     document.documentElement.style.colorScheme = theme;
-  } catch (e) {}
+  } catch (e) {
+    document.documentElement.setAttribute('${THEME_ATTRIBUTE}', '${DEFAULT_THEME}');
+    document.documentElement.style.colorScheme = '${DEFAULT_THEME}';
+  }
 })();`;
