@@ -70,7 +70,8 @@
     ] // Enable Next.js TypeScript plugin
   },
   // Files to include/exclude from the project
-  "exclude": ["node_modules"],
+  // Nested Sanity Studio is its own package with its own deps/tsconfig.
+  "exclude": ["node_modules", "studio-loople"],
   "include": [
     "next-env.d.ts",
     "**/*.ts",
