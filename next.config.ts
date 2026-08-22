@@ -17,6 +17,20 @@ const baseConfig: NextConfig = {
   outputFileTracingIncludes: {
     '/': ['./migrations/**/*'],
   },
+  // Retired marketing auth stubs — send visitors to the real app auth pages
+  redirects: async () =>
+    await Promise.resolve([
+      {
+        source: '/sign-up',
+        destination: 'https://www.loople.app/signup',
+        permanent: false,
+      },
+      {
+        source: '/sign-in',
+        destination: 'https://www.loople.app/login',
+        permanent: false,
+      },
+    ]),
 };
 
 let configWithPlugins: NextConfig = baseConfig;
