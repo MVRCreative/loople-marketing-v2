@@ -81,15 +81,18 @@ export const platformMenu: PlatformMenu = {
   },
 };
 
+/** Loople app origin — auth CTAs point at the real product, not marketing stubs. */
+const appBaseUrl = 'https://www.loople.app';
+
 /** Text link — account access. */
 export const siteSignInCta: SiteLink = {
-  href: '/sign-in',
+  href: `${appBaseUrl}/login`,
   label: 'Sign in',
 };
 
 /** Primary call to action — navbar and hero. */
 export const sitePrimaryCta: SiteLink = {
-  href: '/sign-up',
+  href: `${appBaseUrl}/signup`,
   label: 'Get started',
 };
 
@@ -119,7 +122,7 @@ export const footerLinkGroups: readonly FooterLinkGroup[] = [
       ...topFeatureLinks,
       { href: '/communities', label: 'Communities' },
       { href: '/pricing', label: 'Pricing' },
-      { href: '/sign-up', label: 'Get started' },
+      { href: `${appBaseUrl}/signup`, label: 'Get started' },
     ],
   },
   {
