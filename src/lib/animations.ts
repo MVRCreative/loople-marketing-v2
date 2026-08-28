@@ -45,7 +45,7 @@ const prefersReducedMotion = (): boolean => {
 };
 
 const killScrollTriggerFor = (tween: gsap.core.Tween): void => {
-  const trigger = tween.scrollTrigger as ScrollTriggerInstance | undefined;
+  const trigger = tween.scrollTrigger;
   trigger?.kill();
 };
 
