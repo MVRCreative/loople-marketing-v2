@@ -19,7 +19,6 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { durations, easings } from '@/lib/design-tokens';
 
-type ScrollTriggerInstance = InstanceType<typeof ScrollTrigger>;
 export type AnimationTeardown = () => void;
 export type AnimationTrigger = 'load' | 'scroll';
 
