@@ -1,17 +1,26 @@
 import type { Metadata } from 'next';
-import { MarketingStubPage } from '@/components/common';
+import { LegalDocLayout } from '@/components/legal/LegalDocLayout';
+import { TermsOfServiceContent } from '@/components/legal/TermsOfServiceContent';
+import { termsOfServiceMeta, termsOfServiceToc } from '@/data/terms';
 
 export const metadata: Metadata = {
-  title: 'Terms | Loople',
-  description: 'The terms that govern your use of Loople.',
+  title: `${termsOfServiceMeta.title} | Loople`,
+  description: termsOfServiceMeta.description,
 };
 
 /**
- * Terms marketing stub.
- * @returns Stub page until full content lands.
+ * Loople Terms of Service.
+ * @returns Docs-style terms page with a clickable section index.
  */
 export default function TermsPage() {
   return (
-    <MarketingStubPage title="Terms" description="The terms that govern your use of Loople." />
+    <LegalDocLayout
+      title={termsOfServiceMeta.title}
+      effectiveDate={termsOfServiceMeta.effectiveDate}
+      toc={termsOfServiceToc}
+      currentPath="/terms"
+    >
+      <TermsOfServiceContent />
+    </LegalDocLayout>
   );
 }

@@ -1,20 +1,26 @@
 import type { Metadata } from 'next';
-import { MarketingStubPage } from '@/components/common';
+import { LegalDocLayout } from '@/components/legal/LegalDocLayout';
+import { PrivacyPolicyContent } from '@/components/legal/PrivacyPolicyContent';
+import { privacyPolicyMeta, privacyPolicyToc } from '@/data/privacy';
 
 export const metadata: Metadata = {
-  title: 'Privacy | Loople',
-  description: 'How we collect, use, and protect your information.',
+  title: `${privacyPolicyMeta.title} | Loople`,
+  description: privacyPolicyMeta.description,
 };
 
 /**
- * Privacy marketing stub.
- * @returns Stub page until full content lands.
+ * Loople Privacy Policy.
+ * @returns Docs-style privacy policy with a clickable section index.
  */
 export default function PrivacyPage() {
   return (
-    <MarketingStubPage
-      title="Privacy"
-      description="How we collect, use, and protect your information."
-    />
+    <LegalDocLayout
+      title={privacyPolicyMeta.title}
+      effectiveDate={privacyPolicyMeta.effectiveDate}
+      toc={privacyPolicyToc}
+      currentPath="/privacy"
+    >
+      <PrivacyPolicyContent />
+    </LegalDocLayout>
   );
 }

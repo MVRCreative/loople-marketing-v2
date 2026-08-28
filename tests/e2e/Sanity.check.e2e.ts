@@ -75,6 +75,43 @@ test.describe('Sanity', () => {
       await expect(page.getByText('$120.00 paid · receipt emailed')).toBeVisible();
     });
 
+    test('should display the privacy policy', async ({ page }) => {
+      await page.goto('/privacy');
+
+      await expect(page.getByRole('heading', { name: 'Privacy Policy', level: 1 })).toBeVisible();
+      await expect(
+        page.locator('aside').getByRole('navigation', { name: 'On this page' }),
+      ).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'Legal documents' })).toBeVisible();
+
+      await page
+        .locator('aside')
+        .getByRole('navigation', { name: 'On this page' })
+        .getByRole('link', { name: '17. Contact us' })
+        .click();
+
+      await expect(page.getByRole('heading', { name: '17. Contact Us' })).toBeInViewport();
+    });
+
+    test('should display the terms of service', async ({ page }) => {
+      await page.goto('/terms');
+
+      await expect(page.getByRole('heading', { name: 'Terms of Service', level: 1 })).toBeVisible();
+      await expect(
+        page.locator('aside').getByRole('navigation', { name: 'On this page' }),
+      ).toBeVisible();
+      await expect(page.getByRole('navigation', { name: 'Legal documents' })).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Privacy Policy' }).first()).toBeVisible();
+
+      await page
+        .locator('aside')
+        .getByRole('navigation', { name: 'On this page' })
+        .getByRole('link', { name: '31. Contact' })
+        .click();
+
+      await expect(page.getByRole('heading', { name: '31. Contact' })).toBeInViewport();
+    });
+
     test('should navigate to the pricing stub', async ({ page }) => {
       await page.goto('/');
 
