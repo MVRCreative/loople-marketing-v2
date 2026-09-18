@@ -86,7 +86,8 @@ export const DemoRequestForm = () => {
             Pick a time that works
           </h2>
           <p className="mt-2 text-sm text-ds-muted-foreground">
-            Thanks, {bookedLead.name.split(' ')[0]}. Your details are ready — choose a slot below.
+            Thanks, {bookedLead.name.trim().split(/\s+/u)[0] ?? bookedLead.name}. Your details are
+            ready — choose a slot below.
           </p>
           {errorMessage ? (
             <output className="mt-3 block text-sm text-ds-muted-foreground">{errorMessage}</output>

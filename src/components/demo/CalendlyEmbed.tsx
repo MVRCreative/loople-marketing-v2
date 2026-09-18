@@ -56,7 +56,8 @@ const ensureCalendlyStyles = () => {
 
 /**
  * Loads Calendly's widget script once, then mounts an inline embed.
- * Handles React Strict Mode remounts and already-loaded scripts.
+ * Do not use the `calendly-inline-widget` class here — widget.js auto-inits
+ * those nodes via `data-url` and crashes when that attribute is missing.
  * @param props Prefill name and email from the demo request form.
  * @returns Reserved-height embed container.
  */
@@ -67,16 +68,12 @@ export const CalendlyEmbed = (props: CalendlyEmbedProps) => {
     : undefined;
 
   useEffect(() => {
-    if (!calendlyUrl) {
-      return () => {};
-    }
-
     let cancelled = false;
     let script: HTMLScriptElement | null = null;
 
     const mount = () => {
       const parent = containerRef.current;
-      if (cancelled || !parent || !window.Calendly) {
+      if (cancelled || !calendlyUrl || !parent || !window.Calendly) {
         return;
       }
       parent.replaceChildren();
@@ -91,25 +88,27 @@ export const CalendlyEmbed = (props: CalendlyEmbedProps) => {
       mount();
     };
 
-    ensureCalendlyStyles();
+    if (calendlyUrl) {
+      ensureCalendlyStyles();
 
-    if (window.Calendly) {
-      mount();
-    } else {
-      script = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT_SRC}"]`);
-      if (!script) {
-        script = document.createElement('script');
-        script.src = CALENDLY_SCRIPT_SRC;
-        script.async = true;
-        document.body.append(script);
-      }
-      script.addEventListener('load', onScriptLoad);
-      // Cover the race where load already fired between query and listener.
-      queueMicrotask(() => {
-        if (!cancelled && window.Calendly) {
-          mount();
+      if (window.Calendly) {
+        mount();
+      } else {
+        script = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT_SRC}"]`);
+        if (!script) {
+          script = document.createElement('script');
+          script.src = CALENDLY_SCRIPT_SRC;
+          script.async = true;
+          document.body.append(script);
         }
-      });
+        script.addEventListener('load', onScriptLoad);
+        // Cover the race where load already fired between query and listener.
+        queueMicrotask(() => {
+          if (!cancelled && window.Calendly) {
+            mount();
+          }
+        });
+      }
     }
 
     return () => {
@@ -129,7 +128,7 @@ export const CalendlyEmbed = (props: CalendlyEmbedProps) => {
   return (
     <div
       ref={containerRef}
-      className="calendly-inline-widget min-h-[700px] w-full min-w-[320px] overflow-hidden rounded-ds-lg border border-ds-border bg-ds-card"
+      className="min-h-[700px] w-full min-w-[320px] overflow-hidden rounded-ds-lg border border-ds-border bg-ds-card"
       data-testid="calendly-embed"
     />
   );
