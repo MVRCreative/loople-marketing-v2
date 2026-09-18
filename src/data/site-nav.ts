@@ -90,16 +90,16 @@ export const siteSignInCta: SiteLink = {
   label: 'Sign in',
 };
 
-/** Primary call to action — navbar and hero. */
+/** Product signup — secondary CTA after demo booking. */
 export const sitePrimaryCta: SiteLink = {
   href: `${appBaseUrl}/signup`,
   label: 'Get started',
 };
 
-/** Secondary call to action — hero → platform section. */
-export const siteSecondaryCta: SiteLink = {
-  href: '/#feature-index-heading',
-  label: 'Explore the platform',
+/** Primary call to action — schedule a sales demo. */
+export const siteDemoCta: SiteLink = {
+  href: '/demo',
+  label: 'Schedule Demo',
 };
 
 export type FooterLinkGroup = {
@@ -122,7 +122,7 @@ export const footerLinkGroups: readonly FooterLinkGroup[] = [
       ...topFeatureLinks,
       { href: '/communities', label: 'Communities' },
       { href: '/pricing', label: 'Pricing' },
-      { href: `${appBaseUrl}/signup`, label: 'Get started' },
+      { href: '/demo', label: 'Schedule Demo' },
     ],
   },
   {

@@ -13,7 +13,7 @@ test.describe('Sanity', () => {
       await expect(page.getByRole('link', { name: 'Pricing' }).first()).toBeVisible();
       await expect(page.getByRole('link', { name: 'Resources' }).first()).toBeVisible();
       await expect(page.getByRole('link', { name: 'Sign in' }).first()).toBeVisible();
-      await expect(page.getByRole('link', { name: 'Get started' }).first()).toBeVisible();
+      await expect(page.getByRole('link', { name: 'Schedule Demo' }).first()).toBeVisible();
       await expect(page.getByRole('link', { name: 'Explore the platform' })).toBeVisible();
       await expect(
         page.getByRole('heading', { name: 'The system that keeps the whole community moving.' }),
@@ -112,7 +112,7 @@ test.describe('Sanity', () => {
       await expect(page.getByRole('heading', { name: '31. Contact' })).toBeInViewport();
     });
 
-    test('should navigate to the pricing stub', async ({ page }) => {
+    test('should navigate to the pricing page', async ({ page }) => {
       await page.goto('/');
 
       await page
@@ -121,7 +121,9 @@ test.describe('Sanity', () => {
         .click();
 
       await expect(page).toHaveURL(/pricing$/u);
-      await expect(page.getByRole('heading', { name: 'Pricing' })).toBeVisible();
+      await expect(
+        page.getByRole('heading', { name: 'Pricing that scales with your community' }),
+      ).toBeVisible();
     });
   });
 });

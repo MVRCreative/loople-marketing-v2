@@ -27,3 +27,16 @@ export const FEATURE_DEMOS: Record<string, ComponentType<FeatureDemoProps>> = {
   'program-setup': ProgramSetupDemo,
   'roles-access': RolesAccessDemo,
 };
+
+/**
+ * Whether a feature media slot has a registered demo or a video source.
+ * @param demoId Feature or sub-feature id to look up in `FEATURE_DEMOS`.
+ * @param videoSrc Optional public video path.
+ * @returns True when the slot should render media instead of being omitted.
+ */
+export const hasFeatureMedia = (demoId?: string, videoSrc?: string): boolean => {
+  if (demoId && FEATURE_DEMOS[demoId]) {
+    return true;
+  }
+  return typeof videoSrc === 'string' && videoSrc.length > 0;
+};

@@ -1,6 +1,6 @@
 /**
  * Navbar — logo, Platform mega menu / Communities / Pricing / Resources,
- * Sign in text link, Get started CTA, and mobile disclosure.
+ * Sign in text link, Schedule Demo CTA, and mobile disclosure.
  *
  * On the homepage (`overlayHero`), the bar sits fixed over the hero:
  * transparent with the white mark while the hero is in view, then
@@ -17,7 +17,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/common/Button';
 import { MobileNav } from '@/components/common/MobileNav';
 import { PlatformMenuPanel } from '@/components/common/PlatformMenu';
-import { siteNavLinks, sitePrimaryCta, siteSignInCta } from '@/data/site-nav';
+import { siteDemoCta, siteNavLinks, sitePrimaryCta, siteSignInCta } from '@/data/site-nav';
 import type { SiteNavItem } from '@/data/site-nav';
 import { cn } from '@/lib/cn';
 import { AppConfig } from '@/utils/AppConfig';
@@ -230,15 +230,27 @@ export const Navbar = (props: NavbarProps) => {
               {siteSignInCta.label}
             </Link>
 
-            <Button
+            <Link
               href={sitePrimaryCta.href}
+              className={cn(
+                'inline-flex h-9 items-center rounded-ds-full px-2.5 text-sm font-medium whitespace-nowrap transition-colors duration-500 outline-none focus-visible:ring-2 focus-visible:ring-offset-2 sm:px-3',
+                transparent
+                  ? 'text-white/80 hover:text-white focus-visible:ring-white/50 focus-visible:ring-offset-transparent'
+                  : 'text-ds-muted-foreground hover:text-ds-foreground focus-visible:ring-ds-primary/40 focus-visible:ring-offset-ds-background',
+              )}
+            >
+              {sitePrimaryCta.label}
+            </Link>
+
+            <Button
+              href={siteDemoCta.href}
               size="sm"
               className={cn(
                 transparent &&
                   'bg-white text-ds-foreground hover:bg-white/95 focus-visible:ring-white/50 focus-visible:ring-offset-transparent',
               )}
             >
-              {sitePrimaryCta.label}
+              {siteDemoCta.label}
             </Button>
           </div>
 

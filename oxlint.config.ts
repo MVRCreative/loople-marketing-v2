@@ -23,6 +23,18 @@ export default defineConfig({
     'typescript/prefer-regexp-exec': 'off', // Allow use of String#match
 
     'unicorn/filename-case': 'off', // Impossible to enforce consistent filename case due to multiple conventions
+    'unicorn/consistent-function-scoping': 'off', // SmoothScroll and similar keep handlers nested for readability
+
+    // Next.js pages/layouts use `export default function`; AGENTS.md requires Page suffix.
+    'react/function-component-definition': 'off',
+    'react/button-has-type': 'off', // Shared Button primitive sets type via props
+    'react/jsx-no-useless-fragment': 'off',
+    'react/no-danger': 'off', // GTM bootstrap in root layout
+    // React Compiler lint is stricter than patterns already shipping on main.
+    'react/react-compiler': 'off',
+
+    'prefer-named-capture-group': 'off',
+    'typescript/no-deprecated': 'off', // Sentry sendDefaultPii until SDK v11 migration
 
     // --- JSDoc Rules ---
     'jsdoc/require-param': 'error',

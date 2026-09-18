@@ -11,7 +11,7 @@ import { useEffect, useId, useState } from 'react';
 import { Button } from '@/components/common/Button';
 import { PlatformMenuPanel } from '@/components/common/PlatformMenu';
 import type { SiteNavItem } from '@/data/site-nav';
-import { siteNavLinks, sitePrimaryCta, siteSignInCta } from '@/data/site-nav';
+import { siteDemoCta, siteNavLinks, sitePrimaryCta, siteSignInCta } from '@/data/site-nav';
 import { cn } from '@/lib/cn';
 
 export type MobileNavProps = {
@@ -190,8 +190,15 @@ export const MobileNav = (props: MobileNavProps) => {
               >
                 {siteSignInCta.label}
               </Link>
-              <Button href={sitePrimaryCta.href} size="md" onClick={close} className="w-full">
+              <Link
+                href={sitePrimaryCta.href}
+                onClick={close}
+                className="flex h-11 items-center rounded-ds-md px-2.5 text-sm font-medium text-ds-muted-foreground outline-none hover:bg-ds-muted hover:text-ds-foreground focus-visible:ring-2 focus-visible:ring-ds-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-background"
+              >
                 {sitePrimaryCta.label}
+              </Link>
+              <Button href={siteDemoCta.href} size="md" onClick={close} className="w-full">
+                {siteDemoCta.label}
               </Button>
             </div>
           </div>

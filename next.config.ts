@@ -30,6 +30,11 @@ const baseConfig: NextConfig = {
         destination: 'https://www.loople.app/login',
         permanent: false,
       },
+      {
+        source: '/get-started',
+        destination: 'https://www.loople.app/get-started',
+        permanent: false,
+      },
     ]),
 };
 

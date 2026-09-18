@@ -10,6 +10,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { RevealHeading, RevealLines, Stagger } from '@/components/common';
+import { hasFeatureMedia } from '@/components/home/demos';
 import { FeatureMedia } from '@/components/home/FeatureMedia';
 import type { FeatureEyebrowTone, FeatureHomepagePanel, FeatureSubFeature } from '@/data/features';
 import { FEATURE_INDEX_INTRO, FEATURE_INDEX_TAG, getHomepageFeaturePanels } from '@/data/features';
@@ -121,6 +122,7 @@ const FeatureSubFeatureGrid = (props: { items: readonly FeatureSubFeature[] }) =
 
 const FeaturePanel = (props: { item: FeatureHomepagePanel }) => {
   const { subFeatures, cta } = props.item;
+  const hasMedia = hasFeatureMedia(props.item.id, props.item.videoSrc);
   const hasVideo = Boolean(props.item.videoSrc);
 
   return (
@@ -152,17 +154,20 @@ const FeaturePanel = (props: { item: FeatureHomepagePanel }) => {
           </RevealLines>
         </div>
       </div>
-      <div className={cn(hasVideo ? 'w-full' : 'bg-ds-surface p-6 sm:p-10 lg:p-[45px]')}>
-        <Stagger trigger="scroll" stagger={0} y={24} start="top 90%">
-          <FeatureMedia
-            aspectRatio={props.item.mediaAspect}
-            label={props.item.mediaLabel}
-            videoSrc={props.item.videoSrc}
-            demoId={props.item.id}
-            className={hasVideo ? 'w-full' : 'max-w-[759px] rounded-ds-sm'}
-          />
-        </Stagger>
-      </div>
+      {hasMedia ? (
+        <div className={cn(hasVideo ? 'w-full' : 'bg-ds-surface p-6 sm:p-10 lg:p-[45px]')}>
+          <Stagger trigger="scroll" stagger={0} y={24} start="top 90%">
+            <FeatureMedia
+              aspectRatio={props.item.mediaAspect}
+              label={props.item.mediaLabel}
+              videoSrc={props.item.videoSrc}
+              {...(props.item.captionsSrc ? { captionsSrc: props.item.captionsSrc } : {})}
+              demoId={props.item.id}
+              className={hasVideo ? 'w-full' : 'max-w-[759px] rounded-ds-sm'}
+            />
+          </Stagger>
+        </div>
+      ) : null}
       {subFeatures && subFeatures.length > 0 ? <FeatureSubFeatureGrid items={subFeatures} /> : null}
       <div className="border-t border-ds-border px-6 py-8 sm:px-10 sm:py-10 lg:px-[45px]">
         <Link

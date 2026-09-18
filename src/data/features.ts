@@ -30,6 +30,8 @@ export type Feature = {
   mediaLabel: string;
   mediaAspect: `${number} / ${number}`;
   videoSrc?: string;
+  /** Optional captions track for `videoSrc`. Omit when no captions exist. */
+  captionsSrc?: string;
   subFeatures?: readonly FeatureSubFeature[];
   /** Related Feature ids for cross-links. Empty → same-persona siblings. */
   relatedFeatureIds: readonly string[];
@@ -71,6 +73,7 @@ export type FeatureHomepagePanel = {
   mediaLabel: string;
   mediaAspect: `${number} / ${number}`;
   videoSrc?: string;
+  captionsSrc?: string;
   subFeatures?: readonly FeatureSubFeature[];
   cta: {
     label: string;
@@ -109,7 +112,6 @@ const features: readonly Feature[] = [
       'Manage members, roles, programs, payments, and everyday operations from one connected system.',
     mediaLabel: 'Community Management',
     mediaAspect,
-    videoSrc: '/assets/videos/test-video.mp4',
     relatedFeatureIds: ['online-registration', 'broadcasts', 'programs-events'],
     conceptIds: [],
     audienceIds: [],
@@ -428,6 +430,7 @@ export const getHomepageFeaturePanels = (): readonly FeatureHomepagePanel[] =>
         mediaLabel: feature.mediaLabel,
         mediaAspect: feature.mediaAspect,
         ...(feature.videoSrc ? { videoSrc: feature.videoSrc } : {}),
+        ...(feature.captionsSrc ? { captionsSrc: feature.captionsSrc } : {}),
         ...(feature.subFeatures ? { subFeatures: feature.subFeatures } : {}),
         cta: {
           label: presentation.ctaLabel,

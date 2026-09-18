@@ -13,7 +13,6 @@ const config: KnipConfig = {
     // for future use. Remove this entry once they're either used again
     // or intentionally deleted.
     'src/libs/DB.ts',
-    'src/libs/Logger.ts',
     'src/utils/DBConnection.ts',
     'src/validations/**',
     // Nested Sanity Studio — its own package, not an entry of the marketing app.
@@ -30,9 +29,6 @@ const config: KnipConfig = {
     'graphql',
     // Carried over from the original boilerplate, not yet rewired.
     '@faker-js/faker',
-    '@hookform/resolvers',
-    '@logtape/logtape',
-    'react-hook-form',
     'vitest-browser-react',
   ],
   // Include custom Playwright test file suffixes

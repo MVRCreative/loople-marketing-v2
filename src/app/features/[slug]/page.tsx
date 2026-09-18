@@ -3,14 +3,13 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import {
   Button,
-  MediaPlaceholder,
   Navbar,
   RevealHeading,
   RevealLines,
   SiteFooter,
   Stagger,
 } from '@/components/common';
-import { RelatedContentPlaceholder } from '@/components/features/RelatedContentPlaceholder';
+import { hasFeatureMedia } from '@/components/home/demos';
 import { FeatureMedia } from '@/components/home/FeatureMedia';
 import type { FeatureEyebrowTone, FeatureSubFeature } from '@/data/features';
 import {
@@ -20,7 +19,7 @@ import {
   getHomepagePresentation,
   getRelatedFeatures,
 } from '@/data/features';
-import { sitePrimaryCta } from '@/data/site-nav';
+import { siteDemoCta } from '@/data/site-nav';
 import { cn } from '@/lib/cn';
 
 type FeaturePageProps = {
@@ -58,28 +57,33 @@ export const generateMetadata = async (props: FeaturePageProps): Promise<Metadat
   };
 };
 
-const SubFeatureCard = (props: { item: FeatureSubFeature }) => (
-  <div className="flex flex-col gap-6 rounded-ds-lg border border-ds-border bg-ds-card p-6 sm:p-8">
-    <div className="max-w-md">
-      <h3 className="text-lg font-semibold tracking-tight text-ds-foreground sm:text-xl">
-        {props.item.title}
-      </h3>
-      <p className="mt-3 text-sm leading-relaxed text-ds-muted-foreground">
-        {props.item.description}
-      </p>
+const SubFeatureCard = (props: { item: FeatureSubFeature }) => {
+  const showMedia = hasFeatureMedia(props.item.id);
+
+  return (
+    <div className="flex flex-col gap-6 rounded-ds-lg border border-ds-border bg-ds-card p-6 sm:p-8">
+      <div className="max-w-md">
+        <h3 className="text-lg font-semibold tracking-tight text-ds-foreground sm:text-xl">
+          {props.item.title}
+        </h3>
+        <p className="mt-3 text-sm leading-relaxed text-ds-muted-foreground">
+          {props.item.description}
+        </p>
+      </div>
+      {showMedia ? (
+        <FeatureMedia
+          aspectRatio={props.item.mediaAspect}
+          label={props.item.mediaLabel}
+          demoId={props.item.id}
+          className={cn('w-full rounded-ds-md', props.item.mediaFirst && 'order-first')}
+        />
+      ) : null}
     </div>
-    <FeatureMedia
-      aspectRatio={props.item.mediaAspect}
-      label={props.item.mediaLabel}
-      demoId={props.item.id}
-      className={cn('w-full rounded-ds-md', props.item.mediaFirst && 'order-first')}
-    />
-  </div>
-);
+  );
+};
 
 /**
- * Feature detail page — hero, media, sub-features or placeholder, related
- * features, related-content placeholders, and closing CTA.
+ * Feature detail page — hero, media, sub-features, related features, and closing CTA.
  * @param props Route params promise.
  * @returns Feature detail page.
  */
@@ -98,6 +102,7 @@ export default async function FeaturePage(props: FeaturePageProps) {
   const related = getRelatedFeatures(feature.id, 3);
   const hasSubFeatures = Boolean(feature.subFeatures && feature.subFeatures.length > 0);
   const hasVideo = Boolean(feature.videoSrc);
+  const hasMedia = hasFeatureMedia(feature.id, feature.videoSrc);
 
   return (
     <div className="bg-ds-background text-ds-foreground">
@@ -128,26 +133,29 @@ export default async function FeaturePage(props: FeaturePageProps) {
               {description}
             </RevealLines>
             <div className="mt-10">
-              <Button href={sitePrimaryCta.href} size="md">
-                {sitePrimaryCta.label}
+              <Button href={siteDemoCta.href} size="md">
+                {siteDemoCta.label}
               </Button>
             </div>
           </div>
         </header>
 
-        <section aria-label={`${feature.name} media`} className="border-b border-ds-border">
-          <div className={cn('mx-auto max-w-6xl', hasVideo ? '' : 'px-6 py-10 sm:py-14')}>
-            <div className={cn(hasVideo ? 'w-full' : 'rounded-ds-lg bg-ds-surface p-4 sm:p-6')}>
-              <FeatureMedia
-                aspectRatio={feature.mediaAspect}
-                label={feature.mediaLabel}
-                demoId={feature.id}
-                className={hasVideo ? 'w-full' : 'rounded-ds-md'}
-                {...(feature.videoSrc ? { videoSrc: feature.videoSrc } : {})}
-              />
+        {hasMedia ? (
+          <section aria-label={`${feature.name} media`} className="border-b border-ds-border">
+            <div className={cn('mx-auto max-w-6xl', hasVideo ? '' : 'px-6 py-10 sm:py-14')}>
+              <div className={cn(hasVideo ? 'w-full' : 'rounded-ds-lg bg-ds-surface p-4 sm:p-6')}>
+                <FeatureMedia
+                  aspectRatio={feature.mediaAspect}
+                  label={feature.mediaLabel}
+                  demoId={feature.id}
+                  className={hasVideo ? 'w-full' : 'rounded-ds-md'}
+                  {...(feature.videoSrc ? { videoSrc: feature.videoSrc } : {})}
+                  {...(feature.captionsSrc ? { captionsSrc: feature.captionsSrc } : {})}
+                />
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        ) : null}
 
         {hasSubFeatures ? (
           <section aria-labelledby="sub-features-heading" className="border-b border-ds-border">
@@ -171,28 +179,7 @@ export default async function FeaturePage(props: FeaturePageProps) {
               </Stagger>
             </div>
           </section>
-        ) : (
-          <section
-            aria-labelledby="detail-placeholder-heading"
-            className="border-b border-ds-border"
-          >
-            <div className="mx-auto max-w-6xl px-6 py-14 sm:py-20">
-              <h2
-                id="detail-placeholder-heading"
-                className="text-2xl font-semibold tracking-tight text-ds-foreground sm:text-3xl"
-              >
-                Detailed content coming soon
-              </h2>
-              <p className="mt-3 max-w-2xl text-sm leading-relaxed text-ds-muted-foreground sm:text-base">
-                Deeper walkthroughs, screenshots, and workflows for {feature.name} will land here.
-              </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                <MediaPlaceholder aspectRatio="4 / 3" label={`${feature.name} detail 1`} />
-                <MediaPlaceholder aspectRatio="4 / 3" label={`${feature.name} detail 2`} />
-              </div>
-            </div>
-          </section>
-        )}
+        ) : null}
 
         {related.length > 0 ? (
           <section aria-labelledby="related-features-heading" className="border-b border-ds-border">
@@ -227,8 +214,6 @@ export default async function FeaturePage(props: FeaturePageProps) {
           </section>
         ) : null}
 
-        <RelatedContentPlaceholder featureName={feature.name} />
-
         <section className="border-t border-ds-border bg-ds-muted/40">
           <div className="mx-auto flex max-w-6xl flex-col items-start justify-between gap-6 px-6 py-14 sm:flex-row sm:items-center sm:py-16">
             <div>
@@ -240,8 +225,8 @@ export default async function FeaturePage(props: FeaturePageProps) {
               </p>
             </div>
             <div className="flex flex-wrap items-center gap-3">
-              <Button href={sitePrimaryCta.href} size="md">
-                {sitePrimaryCta.label}
+              <Button href={siteDemoCta.href} size="md">
+                {siteDemoCta.label}
               </Button>
               <Button href="/pricing" variant="outline" size="md">
                 View pricing

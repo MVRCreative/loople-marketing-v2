@@ -6,7 +6,6 @@
 export { Button, type ButtonProps, type ButtonSize, type ButtonVariant } from './Button';
 export { Card, type CardPadding, type CardProps, type CardTone } from './Card';
 export { LogoCarousel, type LogoCarouselItem, type LogoCarouselProps } from './LogoCarousel';
-export { MarketingStubPage, type MarketingStubPageProps } from './MarketingStubPage';
 export { MediaPlaceholder, type MediaPlaceholderProps } from './MediaPlaceholder';
 export { MobileNav, type MobileNavProps } from './MobileNav';
 export { Navbar, type NavbarProps, type NavLink } from './Navbar';

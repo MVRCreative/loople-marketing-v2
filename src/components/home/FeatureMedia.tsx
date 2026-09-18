@@ -14,6 +14,8 @@ export type FeatureMediaProps = {
   label: string;
   /** Public path to an mp4 (or other browser-playable) video. */
   videoSrc?: string;
+  /** Optional captions track for `videoSrc`. Omit when no captions exist. */
+  captionsSrc?: string;
   /** Feature or sub-feature id used to look up a self-playing demo. */
   demoId?: string;
   className?: string;
@@ -48,13 +50,9 @@ export const FeatureMedia = (props: FeatureMediaProps) => {
         preload="auto"
         aria-label={props.label}
       >
-        <track
-          kind="captions"
-          src="/assets/videos/test-video-captions.vtt"
-          srcLang="en"
-          label="English"
-          default
-        />
+        {props.captionsSrc ? (
+          <track kind="captions" src={props.captionsSrc} srcLang="en" label="English" default />
+        ) : null}
       </video>
     </div>
   );

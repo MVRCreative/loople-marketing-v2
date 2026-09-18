@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Navbar, RevealHeading, RevealLines, SiteFooter, Stagger } from '@/components/common';
+import { hasFeatureMedia } from '@/components/home/demos';
 import { FeatureMedia } from '@/components/home/FeatureMedia';
 import type { Feature, FeatureEyebrowTone } from '@/data/features';
 import {
@@ -29,19 +30,23 @@ const FeatureCard = (props: { feature: Feature }) => {
   const presentation = getHomepagePresentation(props.feature.id);
   const tone = presentation?.eyebrowTone ?? 'brand';
   const headline = presentation?.headline ?? props.feature.name;
+  const hasMedia = hasFeatureMedia(props.feature.id, props.feature.videoSrc);
   const hasVideo = Boolean(props.feature.videoSrc);
 
   return (
     <article className="flex flex-col overflow-hidden rounded-ds-lg border border-ds-border bg-ds-card">
-      <div className={cn(hasVideo ? 'w-full' : 'bg-ds-surface p-4')}>
-        <FeatureMedia
-          aspectRatio={props.feature.mediaAspect}
-          label={props.feature.mediaLabel}
-          demoId={props.feature.id}
-          className={hasVideo ? 'w-full' : 'rounded-ds-sm'}
-          {...(props.feature.videoSrc ? { videoSrc: props.feature.videoSrc } : {})}
-        />
-      </div>
+      {hasMedia ? (
+        <div className={cn(hasVideo ? 'w-full' : 'bg-ds-surface p-4')}>
+          <FeatureMedia
+            aspectRatio={props.feature.mediaAspect}
+            label={props.feature.mediaLabel}
+            demoId={props.feature.id}
+            className={hasVideo ? 'w-full' : 'rounded-ds-sm'}
+            {...(props.feature.videoSrc ? { videoSrc: props.feature.videoSrc } : {})}
+            {...(props.feature.captionsSrc ? { captionsSrc: props.feature.captionsSrc } : {})}
+          />
+        </div>
+      ) : null}
       <div className="flex flex-1 flex-col p-6 sm:p-8">
         <span
           className={cn(

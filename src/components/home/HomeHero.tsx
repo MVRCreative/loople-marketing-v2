@@ -8,7 +8,7 @@ import { Button, RevealHeading, RevealLines, Stagger } from '@/components/common
 import { AppStoreBadge } from '@/components/home/AppStoreBadge';
 import { GooglePlayBadge } from '@/components/home/GooglePlayBadge';
 import { HeroStage } from '@/components/home/hero/HeroStage';
-import { sitePrimaryCta, siteSecondaryCta } from '@/data/site-nav';
+import { siteDemoCta, sitePrimaryCta } from '@/data/site-nav';
 
 const HERO_COPY = {
   eyebrow: 'The community platform',
@@ -75,14 +75,14 @@ export const HomeHero = () => (
 
         <Stagger trigger="load" delay={0.38} stagger={0.08} y={14} className="mt-8 sm:mt-10">
           <div className="flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <Button href={sitePrimaryCta.href} size="md" className="w-full sm:w-auto">
-              {sitePrimaryCta.label}
+            <Button href={siteDemoCta.href} size="md" className="w-full sm:w-auto">
+              {siteDemoCta.label}
             </Button>
             <Link
-              href={siteSecondaryCta.href}
+              href={sitePrimaryCta.href}
               className="group inline-flex items-center justify-center gap-1.5 rounded-ds-md text-sm font-semibold text-ds-foreground underline-offset-4 outline-none hover:underline focus-visible:ring-2 focus-visible:ring-ds-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-ds-background sm:text-base"
             >
-              {siteSecondaryCta.label}
+              {sitePrimaryCta.label}
               <span className="transition-transform duration-200 ease-out group-hover:translate-x-0.5">
                 <ArrowRightIcon />
               </span>

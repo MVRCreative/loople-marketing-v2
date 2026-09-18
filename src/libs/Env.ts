@@ -4,10 +4,25 @@ import * as z from 'zod';
 export const Env = createEnv({
   server: {
     ARCJET_KEY: z.string().startsWith('ajkey_').optional(),
+    ATTIO_API_KEY: z.string().min(1).optional(),
+    /**
+     * Calendly personal access token — used only by setup scripts to create
+     * webhook subscriptions. Prefer `CALENDLY_PAT`; `CALENDLY_API_TOKEN` is
+     * accepted as a legacy alias.
+     */
+    CALENDLY_PAT: z.string().min(1).optional(),
+    /**
+     * Shared secret we generate and pass to Calendly when creating the
+     * subscription. Used to verify `Calendly-Webhook-Signature`.
+     */
+    CALENDLY_WEBHOOK_SIGNING_KEY: z.string().min(1).optional(),
+    /** Public origin of this marketing site (no trailing slash). */
+    PUBLIC_MARKETING_URL: z.url().optional(),
     DATABASE_URL: z.string().min(1).optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().optional(),
+    NEXT_PUBLIC_CALENDLY_URL: z.url().optional(),
     NEXT_PUBLIC_LOGGING_LEVEL: z
       .enum(['error', 'info', 'debug', 'warning', 'trace', 'fatal'])
       .default('info'),
@@ -25,8 +40,13 @@ export const Env = createEnv({
   // You need to destructure all the keys manually
   runtimeEnv: {
     ARCJET_KEY: process.env.ARCJET_KEY,
+    ATTIO_API_KEY: process.env.ATTIO_API_KEY,
+    CALENDLY_PAT: process.env.CALENDLY_PAT ?? process.env.CALENDLY_API_TOKEN,
+    CALENDLY_WEBHOOK_SIGNING_KEY: process.env.CALENDLY_WEBHOOK_SIGNING_KEY,
+    PUBLIC_MARKETING_URL: process.env.PUBLIC_MARKETING_URL,
     DATABASE_URL: process.env.DATABASE_URL,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    NEXT_PUBLIC_CALENDLY_URL: process.env.NEXT_PUBLIC_CALENDLY_URL,
     NEXT_PUBLIC_LOGGING_LEVEL: process.env.NEXT_PUBLIC_LOGGING_LEVEL,
     NEXT_PUBLIC_BETTER_STACK_SOURCE_TOKEN: process.env.NEXT_PUBLIC_BETTER_STACK_SOURCE_TOKEN,
     NEXT_PUBLIC_BETTER_STACK_INGESTING_HOST: process.env.NEXT_PUBLIC_BETTER_STACK_INGESTING_HOST,

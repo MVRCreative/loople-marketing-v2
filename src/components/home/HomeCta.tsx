@@ -3,7 +3,7 @@
  */
 
 import { Button } from '@/components/common/Button';
-import { sitePrimaryCta } from '@/data/site-nav';
+import { siteDemoCta, sitePrimaryCta } from '@/data/site-nav';
 
 /**
  * Final homepage call-to-action before the footer.
@@ -20,15 +20,15 @@ export const HomeCta = () => (
           Ready to keep your community moving?
         </h2>
         <p className="mt-2 text-sm text-ds-muted-foreground sm:text-base">
-          Get started free, or see how Loople fits your community.
+          Schedule a demo with our team, or get started on your own.
         </p>
       </div>
       <div className="flex flex-wrap items-center gap-3">
-        <Button href={sitePrimaryCta.href} size="md">
-          {sitePrimaryCta.label}
+        <Button href={siteDemoCta.href} size="md">
+          {siteDemoCta.label}
         </Button>
-        <Button href="/pricing" variant="outline" size="md">
-          View pricing
+        <Button href={sitePrimaryCta.href} variant="outline" size="md">
+          {sitePrimaryCta.label}
         </Button>
       </div>
     </div>

@@ -189,24 +189,24 @@ const DemoIcon = () => (
 const demoLogos = [
   {
     id: '1',
-    alt: 'Arcjet',
-    src: '/assets/images/arcjet-light.svg',
-    width: 96,
-    height: 24,
+    alt: 'Loople',
+    src: '/assets/images/loople-mark.png',
+    width: 36,
+    height: 36,
   },
   {
     id: '2',
-    alt: 'PostHog',
-    src: '/assets/images/posthog-logo.svg',
+    alt: 'Loople',
+    src: '/assets/images/loople-logo.png',
     width: 96,
-    height: 24,
+    height: 28,
   },
   {
     id: '3',
-    alt: 'CodeRabbit',
-    src: '/assets/images/coderabbit-logo-light.svg',
-    width: 120,
-    height: 24,
+    alt: 'Loople',
+    src: '/assets/images/loople-mark-white.png',
+    width: 36,
+    height: 36,
   },
 ] as const;
 
