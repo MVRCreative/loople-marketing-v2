@@ -27,6 +27,7 @@ declare global {
 }
 
 const CALENDLY_SCRIPT_SRC = 'https://assets.calendly.com/assets/external/widget.js';
+const CALENDLY_STYLES_SRC = 'https://assets.calendly.com/assets/external/widget.css';
 
 /**
  * Appends Calendly display flags used by the official inline embed snippet.
@@ -41,7 +42,21 @@ const withEmbedDisplayParams = (baseUrl: string): string => {
 };
 
 /**
+ * Ensures Calendly widget CSS is present once (official embed requirement).
+ */
+const ensureCalendlyStyles = () => {
+  if (document.querySelector(`link[href="${CALENDLY_STYLES_SRC}"]`)) {
+    return;
+  }
+  const link = document.createElement('link');
+  link.rel = 'stylesheet';
+  link.href = CALENDLY_STYLES_SRC;
+  document.head.append(link);
+};
+
+/**
  * Loads Calendly's widget script once, then mounts an inline embed.
+ * Handles React Strict Mode remounts and already-loaded scripts.
  * @param props Prefill name and email from the demo request form.
  * @returns Reserved-height embed container.
  */
@@ -52,46 +67,54 @@ export const CalendlyEmbed = (props: CalendlyEmbedProps) => {
     : undefined;
 
   useEffect(() => {
-    const parent = containerRef.current;
-    let removeLoadListener: (() => void) | undefined;
+    if (!calendlyUrl) {
+      return () => {};
+    }
 
-    if (calendlyUrl && parent) {
+    let cancelled = false;
+    let script: HTMLScriptElement | null = null;
+
+    const mount = () => {
+      const parent = containerRef.current;
+      if (cancelled || !parent || !window.Calendly) {
+        return;
+      }
       parent.replaceChildren();
+      window.Calendly.initInlineWidget({
+        url: calendlyUrl,
+        parentElement: parent,
+        prefill: { name: props.name, email: props.email },
+      });
+    };
 
-      const mount = () => {
-        window.Calendly?.initInlineWidget({
-          url: calendlyUrl,
-          parentElement: parent,
-          prefill: { name: props.name, email: props.email },
-        });
-      };
+    const onScriptLoad = () => {
+      mount();
+    };
 
-      const existing = document.querySelector<HTMLScriptElement>(
-        `script[src="${CALENDLY_SCRIPT_SRC}"]`,
-      );
+    ensureCalendlyStyles();
 
-      if (window.Calendly) {
-        mount();
-      } else if (existing) {
-        existing.addEventListener('load', mount);
-        removeLoadListener = () => {
-          existing.removeEventListener('load', mount);
-        };
-      } else {
-        const script = document.createElement('script');
+    if (window.Calendly) {
+      mount();
+    } else {
+      script = document.querySelector<HTMLScriptElement>(`script[src="${CALENDLY_SCRIPT_SRC}"]`);
+      if (!script) {
+        script = document.createElement('script');
         script.src = CALENDLY_SCRIPT_SRC;
         script.async = true;
-        script.addEventListener('load', mount);
         document.body.append(script);
-        removeLoadListener = () => {
-          script.removeEventListener('load', mount);
-        };
       }
+      script.addEventListener('load', onScriptLoad);
+      // Cover the race where load already fired between query and listener.
+      queueMicrotask(() => {
+        if (!cancelled && window.Calendly) {
+          mount();
+        }
+      });
     }
 
     return () => {
-      removeLoadListener?.();
-      parent?.replaceChildren();
+      cancelled = true;
+      script?.removeEventListener('load', onScriptLoad);
     };
   }, [calendlyUrl, props.email, props.name]);
 
